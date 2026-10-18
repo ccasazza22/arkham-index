@@ -1,0 +1,9 @@
+# Downloaded story texts: re-create with pipeline/fetch_texts.py + pipeline/extract.py
+corpus/
+
+# Local tooling
+__pycache__/
+*.pyc
+.wrangler/
+.DS_Store
+Thumbs.db
