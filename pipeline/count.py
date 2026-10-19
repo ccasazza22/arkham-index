@@ -21,6 +21,7 @@ A = {  # id: [(regex, stories or None)]
  'dagon':[(r"(?<!Order of )\bDagon\b",None)],
  'hydra':[(r"\bHydra\b",[x for x in STORIES if x!='witch'])],  # the constellation in Witch House
  'tsathoggua':[(r"Tsathoggua",None)],
+ 'tindalos':[(r"Tindalos",None)],
  'yig':[(r"\bYig\b",None)],
  'ghatanothoa':[(r"Ghatanothoa",None)],
  'rhantegoth':[(r"Rhan-Tegoth",None)],

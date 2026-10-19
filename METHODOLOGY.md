@@ -2,7 +2,7 @@
 
 The Arkham Index asks one question of Lovecraft's fiction: **how often does he name each god, creature, person, place and book, and which names does he put together?** Every number on the site comes from the pipeline in `pipeline/`. It fetches the stories, splits them into paragraphs, runs a fixed set of search patterns over every paragraph, and records what it finds.
 
-With revisions included, the current corpus gives 5,326 name mentions of 108 entries across 37 stories (434,000 words), and 582 pairs of entries that share at least one paragraph. The site recomputes these figures live when revisions are switched off.
+With revisions included, the current corpus gives 5,327 name mentions of 109 entries across 37 stories (434,000 words), and 588 pairs of entries that share at least one paragraph. The site recomputes these figures live when revisions are switched off.
 
 ## 1. Corpus
 
@@ -27,8 +27,9 @@ Entries are chosen by hand, using one canon rule: **only what appears in Lovecra
 
 - Tsathoggua and the Book of Eibon, from Clark Ashton Smith
 - von Junzt's *Unaussprechlichen Kulten*, from Robert E. Howard
+- the Hounds of Tindalos, from Frank Belknap Long
 
-There are 108 entries in eight categories: Other Gods; Great Old Ones & Deities; Beings & Races; Dreamlands Creatures; People; Cults; Places; Tomes & Artifacts. The web folds these into four groups: gods, creatures, people & cults, and places & books. Descriptions, epithets and "curated connections" (`src/catalogue.js`) are editorial. The counts are not.
+There are 109 entries in eight categories: Other Gods; Great Old Ones & Deities; Beings & Races; Dreamlands Creatures; People; Cults; Places; Tomes & Artifacts. The web folds these into four groups: gods, creatures, people & cults, and places & books. Descriptions, epithets and "curated connections" (`src/catalogue.js`) are editorial. The counts are not.
 
 ## 3. Counting mentions
 

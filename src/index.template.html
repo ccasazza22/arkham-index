@@ -398,7 +398,7 @@ footer b{color:var(--ink);font-weight:600}
     <details class="tbl"><summary>Show the corpus</summary><div class="scroll"><table class="mtable"><thead><tr><th>Year</th><th>Story</th><th>Words</th><th>Names counted</th></tr></thead><tbody id="mCorpus"></tbody></table></div></details>
 
     <h3 id="m-entries">2. What counts as an entry</h3>
-    <p>Entries are chosen by hand, using one canon rule: <b>only what appears in Lovecraft's own fiction</b>. August Derleth's additions and later writers' creations are excluded. A few names Lovecraft borrowed from friends (Tsathoggua, the Book of Eibon, von Junzt's <i>Unaussprechlichen Kulten</i>) are included, and flagged, because Lovecraft wrote them into his own stories.</p>
+    <p>Entries are chosen by hand, using one canon rule: <b>only what appears in Lovecraft's own fiction</b>. August Derleth's additions and later writers' creations are excluded. A few names Lovecraft borrowed from friends (Tsathoggua, the Book of Eibon, the Hounds of Tindalos, von Junzt's <i>Unaussprechlichen Kulten</i>) are included, and flagged, because Lovecraft wrote them into his own stories.</p>
     <p>Each entry belongs to one of eight categories, which the web folds into four groups: gods and Great Old Ones; creatures and races; people and cults; places and books. The descriptions, epithets and "curated connections" are written by hand and are editorial. The counts are not.</p>
 
     <h3 id="m-mentions">3. Counting mentions</h3>
@@ -470,7 +470,7 @@ footer b{color:var(--ink);font-weight:600}
 
 <footer>
   <div class="in">
-    <p><b>What counts as canon.</b> Lovecraft's own stories only. August Derleth's additions and later writers' creations are left out. A few names Lovecraft borrowed from friends (Tsathoggua, the Book of Eibon, von Junzt) are included and flagged, because he wrote them into his own fiction.</p>
+    <p><b>What counts as canon.</b> Lovecraft's own stories only. August Derleth's additions and later writers' creations are left out. A few names Lovecraft borrowed from friends (Tsathoggua, the Book of Eibon, the Hounds of Tindalos, von Junzt) are included and flagged, because he wrote them into his own fiction.</p>
     <p><b>Revisions.</b> Five stories Lovecraft ghost-wrote or heavily rewrote for clients are tagged, and the Revisions switch hides them and their counts. Years are dates of composition.</p>
   </div>
 </footer>
@@ -902,7 +902,11 @@ function lightStory(id,cam=true){
 }
 $('#storySel').addEventListener('change',ev=>lightStory(ev.target.value));
 $('#findIn').addEventListener('change',ev=>{const q=ev.target.value.trim().toLowerCase();const e=E.filter(isVis).find(x=>x.n.toLowerCase()===q)||E.filter(isVis).find(x=>x.n.toLowerCase().includes(q));
-  if(!e) return; const n=G.byId[e.id]; if(!n) return; G.hidden.delete(GROUP[e.c]); renderLegend(); if(G.story&&!inStory(n)) lightStory(null,false);
+  if(!e) return; let n=G.byId[e.id]; if(!n) return;
+  // a name whose links all fall below the "at least" threshold is hidden: lower the threshold just enough to show it
+  if(!n.deg&&G.mode==='co'){let mx=0; cow().forEach((w,k)=>{const [x,y]=k.split('|'); if(x===e.id||y===e.id) mx=Math.max(mx,w);});
+    if(mx){G.minW=mx;$('#minW').value=mx;$('#minWv').textContent=mx;buildGraph();n=G.byId[e.id];}}
+  G.hidden.delete(GROUP[e.c]); renderLegend(); if(G.story&&!inStory(n)) lightStory(null,false);
   G.sel=n; camOn(e.id,1.6); ev.target.value='';});
 function focusNode(id){setView('dive');const n=G.byId[id];if(!n)return;G.hidden.delete(grp(n));renderLegend();G.sel=n;
   document.getElementById('web').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});camOn(id,1.5);}
