@@ -19,7 +19,7 @@ A = {  # id: [(regex, stories or None)]
  'shub':[(r"Shub-Niggurath",None)],
  'cthulhu':[(r"Cthulhu",None),(r"\bTulu\b",['mound'])],
  'dagon':[(r"(?<!Order of )\bDagon\b",None)],
- 'hydra':[(r"\bHydra\b",None)],
+ 'hydra':[(r"\bHydra\b",[x for x in STORIES if x!='witch'])],  # the constellation in Witch House
  'tsathoggua':[(r"Tsathoggua",None)],
  'yig':[(r"\bYig\b",None)],
  'ghatanothoa':[(r"Ghatanothoa",None)],
@@ -28,7 +28,7 @@ A = {  # id: [(regex, stories or None)]
  'nodens':[(r"Nodens",None)],
  'greatones':[(r"Great Ones|gods of [Ee]arth",['othergods','kadath'])],
  'umr':[(r"Umr at-Tawil",None)],
- 'elderthings':[(r"Elder Things?",[x for x in STORIES if x!='shadowtime']),(r"(?<!Great )Old Ones",['mountains'])],
+ 'elderthings':[(r"Elder Things?",[x for x in STORIES if x not in ('shadowtime','dunwich')]),(r"(?<!Great )Old Ones",['mountains'])],
  'shoggoths':[(r"[Ss]hoggoths?",None)],
  'migo':[(r"Mi-[Gg]o",None),(r"Outer Ones?",['whisperer'])],
  'yith':[(r"Great Race|\bYith\b",None)],
@@ -39,7 +39,7 @@ A = {  # id: [(regex, stories or None)]
  'twin':[(r"\b[Tt]win\b|[Tt]he [Hh]orror\b|[Ii]nvisible (?:thing|[Hh]orror)",['dunwich'])],
  'brownjenkin':[(r"Brown Jenkin",None)],
  'kenyan':[(r"K'n-yan",None)],
- 'ghouls':[(r"\b[Gg]houls?\b",None)],
+ 'ghouls':[(r"\b[Gg]houls?\b",[x for x in STORIES if x not in ('cdw','hound','west','nameless')])],  # grave-robbers and figures of speech there
  'nightgaunts':[(r"[Nn]ight-gaunts?",None)],
  'gugs':[(r"\b[Gg]ugs?\b",None)],
  'ghasts':[(r"\b[Gg]hasts?\b",None)],
@@ -48,7 +48,7 @@ A = {  # id: [(regex, stories or None)]
  'zoogs':[(r"\b[Zz]oogs?\b",None)],
  'shantaks':[(r"[Ss]hantaks?",None)],
  'cats':[(r"\b[Cc]ats?\b",['ulthar','kadath'])],
- 'thurston':[(r"Thurston",None)],
+ 'thurston':[(r"Thurston",['coc'])],  # "Thurston's Tavern" in Ward
  'angell':[(r"Angell|my (?:grand-?|great-?)?uncle",['coc'])],
  'legrasse':[(r"Legrasse",None)],
  'johansen':[(r"Johansen",None)],
@@ -74,7 +74,7 @@ A = {  # id: [(regex, stories or None)]
  'ward':[(r"\bWard\b|\bCharles\b",['cdw'])],
  'curwen':[(r"Curwen",None)],
  'willett':[(r"Willett",None)],
- 'gilman':[(r"Gilman",None)],
+ 'gilman':[(r"Gilman",['witch'])],  # Innsmouth's Gilman House and Gilman family are not Walter
  'keziah':[(r"Keziah",None)],
  'pickman':[(r"Pickman",['pickman','kadath'])],
  'zann':[(r"\bZann\b",None)],
@@ -108,7 +108,7 @@ A = {  # id: [(regex, stories or None)]
  'exham':[(r"Exham",None)],
  'yuggoth':[(r"Yuggoth",None)],
  'leng':[(r"\bLeng\b",None)],
- 'kadath':[(r"Kadath",None)],
+ 'kadath':[(r"Kadath\b",None)],  # not Kadatheron in Sarnath
  'ulthar':[(r"Ulthar",None)],
  'celephais':[(r"Celepha[iï]s",None)],
  'sarnath':[(r"Sarnath",None)],

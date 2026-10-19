@@ -2,7 +2,7 @@
 
 The Arkham Index asks one question of Lovecraft's fiction: **how often does he name each god, creature, person, place and book, and which names does he put together?** Every number on the site comes from the pipeline in `pipeline/`. It fetches the stories, splits them into paragraphs, runs a fixed set of search patterns over every paragraph, and records what it finds.
 
-With revisions included, the current corpus gives 5,366 name mentions of 108 entries across 37 stories (434,000 words), and 598 pairs of entries that share at least one paragraph. The site recomputes these figures live when revisions are switched off.
+With revisions included, the current corpus gives 5,326 name mentions of 108 entries across 37 stories (434,000 words), and 582 pairs of entries that share at least one paragraph. The site recomputes these figures live when revisions are switched off.
 
 ## 1. Corpus
 
@@ -64,7 +64,7 @@ The paragraph is the unit because it's the smallest span where Lovecraft reliabl
 ## 5. Validation
 
 - **Reproducibility.** Re-running `fetch_texts.py`, `extract.py` and `count.py` from scratch reproduces the committed `data/counts.json` exactly: mentions, co-mentions and word counts.
-- **Second edition.** `pipeline/verify_pdf.py` compares totals with a *Complete Works* PDF. These names match exactly:
+- **Second edition.** `pipeline/verify_pdf.py` counts raw names in a *Complete Works* PDF and in the corpus. These appear the same number of times in both:
 
   | Name | Count |
   |---|---|
@@ -74,11 +74,18 @@ The paragraph is the unit because it's the smallest span where Lovecraft reliabl
   | Gilman | 122 |
   | Necronomicon | 49 |
 
-  Other names differ in both directions, for known reasons. The PDF leaves out the five revisions (it never mentions Zamacona) and includes stories outside this corpus.
+  This checks the transcription, not attribution: only 103 of the 122 "Gilman"s are Walter Gilman (see below). Other names differ in both directions, for known reasons. The PDF leaves out the five revisions (it never mentions Zamacona) and includes stories outside this corpus.
 - **Review of low counts.** Suspiciously small totals were read in context, which led to three corrections:
   - *The Shadow over Innsmouth* uses the words "Deep Ones" only twice, so their usual names there were added as scoped aliases.
   - In *The Shadow Out of Time*, "Elder Things" means the flying polyps, so those matches are credited to the polyps.
   - "Old Ones" in *At the Mountains of Madness* excludes "Great Old Ones".
+- **Review of stray matches.** Every match in a story outside an entry's expected stories was read in context. Most are Lovecraft name-dropping his own creations, and they stay. Six were other things with the same name and were scoped out:
+  - "Gilman" in *Innsmouth* and *Doorstep*: the Gilman House hotel and the Innsmouth Gilman family, not Walter (19 matches).
+  - "Ghoul" in *Charles Dexter Ward*, "The Hound", *Herbert West* and "The Nameless City": grave-robbers or a figure of speech (11).
+  - "Kadath" inside "Kadatheron", in "Sarnath" and *Dream-Quest* (6). The pattern is now `Kadath\b`.
+  - "Hydra" in *Witch House*: the constellation (2).
+  - "Thurston" in *Ward*: Thurston's Tavern (1).
+  - "Elder Things" in *Dunwich*: Armitage's vague phrase, not the Antarctic beings (1).
 - **Transparency.** Every entry shows its exact patterns, on its card and in the site's Method table.
 
 ## 6. Limitations
