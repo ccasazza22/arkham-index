@@ -51,10 +51,10 @@ Preview locally with any static server, for example `python -m http.server -d pu
 | Setting | Value |
 |---|---|
 | Framework preset | None |
-| Build command | `python pipeline/build.py` |
+| Build command | `python3 pipeline/build.py` (or leave empty) |
 | Build output directory | `public` |
 
-Every push to the production branch deploys, and other branches get preview URLs. Because `public/index.html` is committed, an empty build command also works.
+Every push to the production branch deploys, and other branches get preview URLs. Because `public/index.html` is committed, an empty build command also works. Cloudflare then serves `public/` as it is, so run `build.py` locally before you push.
 
 **Direct upload.** From the repo root, run:
 

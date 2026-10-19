@@ -95,7 +95,7 @@ h1{text-shadow:0 0 28px rgba(168,224,58,.14);font-family:var(--f-display);font-w
 .ctl{display:flex;align-items:center;gap:8px;color:var(--muted)}
 .ctl input[type=range]{accent-color:var(--accent);width:110px}
 .ctl output{font-family:var(--f-mono);color:var(--ink);min-width:2ch}
-.stage{position:relative;background-image:radial-gradient(60% 55% at 58% 50%,var(--glow-p),transparent 75%),radial-gradient(40% 40% at 50% 50%,var(--glow-g),transparent 70%)!important;height:clamp(460px,calc(100vh - 150px),880px);border:1px solid var(--line);background:var(--paper);border-radius:4px;overflow:hidden}
+.stage{position:relative;background-image:radial-gradient(60% 55% at 58% 50%,var(--glow-p),transparent 75%),radial-gradient(40% 40% at 50% 50%,var(--glow-g),transparent 70%)!important;height:clamp(520px,calc(100vh - 110px),1040px);border:1px solid var(--line);background:var(--paper);border-radius:4px;overflow:hidden}
 #cv{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .zhint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:6px 12px;border-radius:2px;font-size:.84rem;pointer-events:none;z-index:3}
 .zoom{position:absolute;right:max(10px,env(safe-area-inset-right,0px));bottom:10px;display:flex;gap:4px}
@@ -445,7 +445,7 @@ footer b{color:var(--ink);font-weight:600}
     </ul>
 
     <h3 id="m-viz">7. Visual encoding</h3>
-    <p>In the web, a node's radius grows with the square root of its mention count, so its <b>area</b>, not its width, tracks the count. Positions come from a force simulation: linked entries pull together and all entries push apart. Closeness means "often named together." Absolute position means nothing, and the layout changes slightly on each visit. Hollow shapes are entries that are never named.</p>
+    <p>In the web, a node's radius grows with the square root of its mention count, so its <b>area</b>, not its width, tracks the count. Positions come from a force simulation: linked entries pull together and all entries push apart. The layout is stretched to fit the shape of the screen. Closeness means "often named together." Absolute position means nothing, and the layout changes slightly on each visit. Hollow shapes are entries that are never named. Labels are drawn in order of mention count, and a label that would overlap one already drawn is hidden until you zoom in or hover.</p>
     <p>The four group colours were checked with a colour-vision validator against the page background, for every pair of colours. All four pass the standard tests for colour-blind and full-colour readers. Each group also has its own shape, so colour is never the only cue. The heatmap uses a single-hue scale on a square-root curve, so rare names stay visible next to common ones.</p>
 
     <h3 id="m-repro">8. Reproducing the numbers</h3>
@@ -978,20 +978,23 @@ function buildGraph(){
   if(G.mode==='co') cow().forEach((w,k)=>{if(w<G.minW)return;const [a,b]=k.split('|'),n=G.byId[a],m=G.byId[b];if(n&&m)addE(n,m,w);});
   else G.nodes.forEach(n=>adj.get(n.id).forEach(t=>{const m=G.byId[t]; if(m&&n.id<t) addE(n,m,1);}));
   const fresh=!G.built; G.built=true;
-  G.alpha=1; for(let i=0;i<300;i++) step();
-  if(fresh){resizeCanvas(); fitNow();}
+  if(fresh) resizeCanvas();
+  G.alpha=1; for(let i=0;i<400;i++) step();
+  if(fresh) fitNow();
   G.sel=st.open?G.byId[st.open]||null:G.sel&&G.byId[G.sel.id]?G.sel:null;
   if(!reduce) kick(.06); else draw();
 }
+const REP=6500;
 function step(){
   const ns=G.nodes.filter(shown), a=G.alpha;
   for(let i=0;i<ns.length;i++){const p=ns[i];for(let j=i+1;j<ns.length;j++){const q=ns[j];let dx=p.x-q.x,dy=p.y-q.y,d2=dx*dx+dy*dy;
-    if(d2<1){dx=Math.random()-.5;dy=Math.random()-.5;d2=1;} if(d2>160000) continue;
-    const d=Math.sqrt(d2), md=rad(p)+rad(q)+8, f=1400*a/d2+(d<md?(md-d)*.3:0), fx=dx/d*f, fy=dy/d*f; p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy;}}
+    if(d2<1){dx=Math.random()-.5;dy=Math.random()-.5;d2=1;} if(d2>490000) continue;
+    const d=Math.sqrt(d2), md=rad(p)+rad(q)+26, f=REP*a*(1+Math.min(p.deg,q.deg)*.04)/d2+(d<md?(md-d)*.3:0), fx=dx/d*f, fy=dy/d*f; p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy;}}
   for(const ed of G.edges){const p=ed.a,q=ed.b; if(!shown(p)||!shown(q)) continue;
-    const dx=q.x-p.x,dy=q.y-p.y,d=Math.sqrt(dx*dx+dy*dy)||1,k=G.mode==='co'?.005+.015*Math.min(1,Math.log2(1+ed.w)/4):.02,f=(d-56-rad(p)-rad(q))*k*a,fx=dx/d*f,fy=dy/d*f;
+    const dx=q.x-p.x,dy=q.y-p.y,d=Math.sqrt(dx*dx+dy*dy)||1,k=G.mode==='co'?.005+.015*Math.min(1,Math.log2(1+ed.w)/4):.02,f=(d-130-rad(p)-rad(q))*k*a,fx=dx/d*f,fy=dy/d*f;
     p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy;}
-  for(const n of ns){n.vx-=n.x*.005*a;n.vy-=n.y*.005*a; if(n===G.drag){n.vx=n.vy=0;continue;} n.vx*=.8;n.vy*=.8;n.x+=n.vx;n.y+=n.vy;}
+  const ar=G.w&&G.h?G.w/G.h:1.6, gx=.0024/ar, gy=.0034*ar;
+  for(const n of ns){const pull=n.deg<=1?4:1; n.vx-=n.x*gx*pull*a;n.vy-=n.y*gy*pull*a; if(n===G.drag){n.vx=n.vy=0;continue;} n.vx*=.8;n.vy*=.8;n.x+=n.vx;n.y+=n.vy;}
   G.alpha=Math.max(G.alpha*.985,G.drag?.15:0);
 }
 function loop(){G.raf=0; if(G.alpha>.008||G.drag){step();step();draw();G.raf=requestAnimationFrame(loop);} else draw();}
@@ -1007,8 +1010,8 @@ function fitTarget(ns){
   if(!ns.length||!G.w) return [G.scale,G.tx,G.ty];
   let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9; ns.forEach(n=>{const r=rad(n);x0=Math.min(x0,n.x-r);x1=Math.max(x1,n.x+r);y0=Math.min(y0,n.y-r);y1=Math.max(y1,n.y+r);});
   const lp=leftPad(), aw=G.w-lp;
-  const s=Math.max(.25,Math.min(2.2,Math.min(aw/(x1-x0+120),G.h/(y1-y0+90))));
-  return [s,-(x0+x1)/2*s+lp/2,-(y0+y1)/2*s];
+  const s=Math.max(.25,Math.min(2.2,Math.min(aw/(x1-x0+260),G.h/(y1-y0+80))));
+  return [s,-(x0+x1)/2*s+lp/2-40*s,-(y0+y1)/2*s];
 }
 function fitNow(){const [s,x,y]=fitTarget(G.nodes.filter(shown));G.scale=s;G.tx=x;G.ty=y;draw();}
 let camRaf=0;
@@ -1052,15 +1055,24 @@ function draw(){
     if(!n.m){ctx.strokeStyle=col[g];ctx.lineWidth=1.6/G.scale;ctx.stroke();}
     else{ctx.fillStyle=col[g];ctx.fill();ctx.strokeStyle=paper;ctx.lineWidth=1.5/G.scale;ctx.stroke();}
     if(n===focus){drawShape(g,n.x,n.y,r+3/G.scale);ctx.strokeStyle=ink;ctx.lineWidth=2/G.scale;ctx.stroke();} }
-  // labels
+  // labels: highest priority first; a label that would overlap one already drawn is skipped
   ctx.globalAlpha=1; ctx.lineJoin='round'; ctx.textBaseline='middle';
+  const cand=[];
   for(const n of G.nodes){ if(!shown(n)||dimmed(n)) continue;
-    const big=S_?mc(n.id,S_)>=3:n.m>=45;
-    if(!(n===focus||(nb&&nb.has(n.id))||big||G.scale>1.5)) continue;
+    const big=S_?mc(n.id,S_)>=3:n.m>=30, isNb=nb&&nb.has(n.id);
+    if(!(n===focus||isNb||big||G.scale>1.5)) continue;
+    cand.push({n,pr:(n===focus?1e7:0)+(isNb?1e6:0)+(S_?mc(n.id,S_):n.m)});}
+  cand.sort((a,b)=>b.pr-a.pr);
+  const boxes=[], free=b=>boxes.every(o=>b.x1<o.x0||b.x0>o.x1||b.y1<o.y0||b.y0>o.y1);
+  for(const {n} of cand){
     const r=S_&&inStory(n)?2.6+Math.sqrt(mc(n.id,S_))*1.6:rad(n), fs=(n===focus?15:n.m>=120?14:12.5)/G.scale;
     ctx.font=`${n===focus?'600 ':''}${fs}px Spectral, Georgia, serif`;
-    const x=n.x+r+4/G.scale, y=n.y;
-    ctx.lineWidth=4/G.scale; ctx.strokeStyle=paper; ctx.strokeText(n.e.n,x,y); ctx.fillStyle=ink; ctx.fillText(n.e.n,x,y); }
+    const tw=ctx.measureText(n.e.n).width, gap=4/G.scale, hh=fs*.62;
+    let x=n.x+r+gap, b={x0:x,x1:x+tw,y0:n.y-hh,y1:n.y+hh};
+    if(!free(b)){x=n.x-r-gap-tw; b={x0:x,x1:x+tw,y0:n.y-hh,y1:n.y+hh};}
+    if(!free(b)&&n!==focus) continue;
+    boxes.push(b);
+    ctx.lineWidth=4/G.scale; ctx.strokeStyle=paper; ctx.strokeText(n.e.n,x,n.y); ctx.fillStyle=ink; ctx.fillText(n.e.n,x,n.y); }
 }
 function toWorld(ev){const r=cv.getBoundingClientRect(),sx=ev.clientX-r.left,sy=ev.clientY-r.top;return {sx,sy,x:(sx-G.w/2-G.tx)/G.scale,y:(sy-G.h/2-G.ty)/G.scale};}
 function hit(p){let best=null,bd=1e9;for(const n of G.nodes){if(!shown(n))continue;const d=Math.hypot(n.x-p.x,n.y-p.y);if(d<rad(n)+7/G.scale&&d<bd){bd=d;best=n;}}return best;}

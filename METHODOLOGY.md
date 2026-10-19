@@ -101,7 +101,8 @@ The paragraph is the unit because it's the smallest span where Lovecraft reliabl
 ## 7. Visual encoding
 
 - **Node size.** Radius = 2.6 + 1.05 × √mentions, so a node's *area* roughly tracks its count.
-- **Layout.** A force simulation: linked entries attract, all entries repel, and colliding nodes push apart. Closeness means "often named together." Absolute position carries no meaning and varies slightly per visit.
+- **Layout.** A force simulation: linked entries attract, all entries repel, and colliding nodes push apart. The pull toward the centre is weaker sideways, so the web stretches to fit a wide screen. Closeness means "often named together." Absolute position carries no meaning and varies slightly per visit.
+- **Labels.** Drawn in order of mention count. A label that would overlap one already drawn is hidden until you zoom in or hover.
 - **Links.** Width grows with √weight. In "light up a story" mode, links and node sizes use that story's counts only.
 - **Colour.** Four group colours (alien magenta, sickly green, drowned blue, oozing purple) were checked for all six pairs against the page surface `#120D1C`, covering lightness band, chroma, separation under colour-vision deficiency, separation under normal vision, and contrast. All four pass. Each group also has a distinct shape (diamond, triangle, circle, square), so colour is never the only cue.
 - **Heatmap.** A single-hue sequential scale on a square-root curve, so rare names stay visible next to common ones.
