@@ -61,8 +61,9 @@ button{cursor:pointer}
 .linkbtn{background:none;border:0;padding:2px 0;color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-size:.84rem}
 
 /* Hero */
-.hero{padding-block:22px 6px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:8px 48px;align-items:end}
+.hero{padding-block:22px 10px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 48px;align-items:end}
 .hero .stats{margin-top:0;justify-content:flex-start}
+@media (min-width:901px){.hero .stats{flex-wrap:nowrap;gap:12px 30px}}
 @media (max-width:900px){.hero{grid-template-columns:1fr}}
 .kicker{font-family:var(--f-sc);font-size:1rem;letter-spacing:.05em;color:var(--accent);margin:0 0 6px}
 h1{text-shadow:0 0 28px rgba(168,224,58,.14);font-family:var(--f-display);font-weight:400;font-size:clamp(2.1rem,4.4vw,3.3rem);line-height:1;margin:0;letter-spacing:-.01em;text-wrap:balance;max-width:20ch}
@@ -71,11 +72,14 @@ h1{text-shadow:0 0 28px rgba(168,224,58,.14);font-family:var(--f-display);font-w
 .stats{display:flex;flex-wrap:wrap;gap:12px 36px;margin:22px 0 0;padding:0;list-style:none}
 .stats li{display:flex;flex-direction:column}
 .stats b{font-family:var(--f-display);font-weight:400;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums}
-.stats span{font-size:.86rem;color:var(--muted)}
+.stats span{font-size:.86rem;color:var(--muted);white-space:nowrap}
 
 /* Web */
 .web-sec{padding-bottom:8px}
-.controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:10px;font-size:.88rem}
+.controls{display:flex;flex-direction:column;gap:14px;padding-block:22px 16px;font-size:.88rem}
+.ctl-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px}
+.ctl-row .sp{flex:1 1 0}
+.legend-lbl{font-family:var(--f-sc);color:var(--muted);letter-spacing:.04em}
 .field{position:relative}
 .sel{max-width:280px}
 .field input,.field select,.sel{padding:6px 10px;border:1px solid var(--line);background:var(--paper);border-radius:2px;font-size:.88rem;max-width:100%}
@@ -318,11 +322,14 @@ footer b{color:var(--ink);font-weight:600}
 
   <section class="web-sec in wide" id="web">
     <div class="controls">
+     <div class="ctl-row">
       <div class="field"><input id="findIn" list="names" placeholder="Find a name…" aria-label="Find a name in the web"><datalist id="names"></datalist></div>
       <select class="sel" id="storySel" aria-label="Light up one story's cast"><option value="">Light up a story…</option></select>
-      <div class="legend" id="legend" aria-label="Groups"></div>
+      <span class="sp"></span>
       <div class="ctl">Links <span class="seg" id="segMode"><button data-mode="co" aria-pressed="true">Shared paragraphs</button><button data-mode="curated" aria-pressed="false">Curated</button></span></div>
       <label class="ctl" id="minWrap">At least <input type="range" id="minW" min="1" max="15" value="2"><output id="minWv">2</output></label>
+     </div>
+     <div class="ctl-row"><span class="legend-lbl">Show</span><div class="legend" id="legend" aria-label="Groups"></div><label class="ctl"><input type="checkbox" id="bubT" checked style="accent-color:var(--accent)"> Clusters</label></div>
     </div>
     <div class="stage" id="stage">
       <canvas id="cv" aria-label="Network of names in Lovecraft's fiction. Use the Catalogue view for a text version."></canvas>
@@ -446,6 +453,7 @@ footer b{color:var(--ink);font-weight:600}
 
     <h3 id="m-viz">7. Visual encoding</h3>
     <p>In the web, a node's radius grows with the square root of its mention count, so its <b>area</b>, not its width, tracks the count. Positions come from a force simulation: linked entries pull together and all entries push apart. The layout is stretched to fit the shape of the screen. Closeness means "often named together." Absolute position means nothing, and the layout changes slightly on each visit. Hollow shapes are entries that are never named. Labels are drawn in order of mention count, and a label that would overlap one already drawn is hidden until you zoom in or hover.</p>
+    <p><b>Clusters.</b> The shaded bubbles are communities found by the Louvain method, which groups entries so that more of the shared-paragraph weight falls inside groups than chance would predict. It runs on the links currently drawn, so it changes with the "at least" slider and the revisions switch. Groups with fewer than five members get no bubble. Each bubble is named after its two most-named members. The algorithm draws the groups, not an editor, so a bubble may cut across a story cycle where Lovecraft's own crossovers pull it.</p>
     <p>The four group colours were checked with a colour-vision validator against the page background, for every pair of colours. All four pass the standard tests for colour-blind and full-colour readers. Each group also has its own shape, so colour is never the only cue. The heatmap uses a single-hue scale on a square-root curve, so rare names stay visible next to common ones.</p>
 
     <h3 id="m-repro">8. Reproducing the numbers</h3>
@@ -966,7 +974,7 @@ const G={nodes:[],edges:[],byId:{},scale:1,tx:0,ty:0,alpha:0,hover:null,sel:null
 const grp=n=>GROUP[n.e.c];
 const shown=n=>!G.hidden.has(grp(n))&&(n.deg>0||G.story&&inStory(n));
 const inStory=n=>!G.story||visS(n.e).includes(G.story);
-const rad=n=>2.6+Math.sqrt(n.m)*1.05;
+const rad=n=>4+Math.sqrt(n.m)*1.6;
 const ekey=(a,b)=>a<b?a+'|'+b:b+'|'+a;
 function buildGraph(){
   const vis=E.filter(isVis), old=G.byId;
@@ -977,27 +985,87 @@ function buildGraph(){
   const addE=(n,m,w)=>{G.edges.push({a:n,b:m,w});n.deg++;m.deg++;G.nb.get(n.id).add(m.id);G.nb.get(m.id).add(n.id);G.ew.set(ekey(n.id,m.id),w);};
   if(G.mode==='co') cow().forEach((w,k)=>{if(w<G.minW)return;const [a,b]=k.split('|'),n=G.byId[a],m=G.byId[b];if(n&&m)addE(n,m,w);});
   else G.nodes.forEach(n=>adj.get(n.id).forEach(t=>{const m=G.byId[t]; if(m&&n.id<t) addE(n,m,1);}));
+  markSmall(); G.comms=louvain();
   const fresh=!G.built; G.built=true;
   if(fresh) resizeCanvas();
-  G.alpha=1; for(let i=0;i<400;i++) step();
+  G.alpha=1; for(let i=0;i<600;i++) step();
   if(fresh) fitNow();
   G.sel=st.open?G.byId[st.open]||null:G.sel&&G.byId[G.sel.id]?G.sel:null;
   if(!reduce) kick(.06); else draw();
 }
 const REP=6500;
+// Nodes in small islands (fewer than 6 members) get a stronger pull to the centre so they don't drift off.
+function markSmall(){
+  const seen=new Set();
+  for(const n of G.nodes){ if(seen.has(n.id)) continue; const comp=[n], q=[n]; seen.add(n.id);
+    while(q.length){const c=q.pop(); G.nb.get(c.id).forEach(t=>{if(!seen.has(t)){seen.add(t);const m=G.byId[t];comp.push(m);q.push(m);}});}
+    comp.forEach(m=>{m.small=comp.length<6;}); }
+}
+// Louvain modularity on the drawn links (weights = shared paragraphs). Deterministic: nodes are visited in id order.
+function louvain(){
+  const ns=G.nodes.filter(n=>n.deg>0).sort((a,b)=>a.id<b.id?-1:1); if(!ns.length) return [];
+  const ix=new Map(ns.map((n,i)=>[n.id,i]));
+  let adjL=ns.map(()=>new Map());
+  for(const ed of G.edges){const i=ix.get(ed.a.id),j=ix.get(ed.b.id);adjL[i].set(j,(adjL[i].get(j)||0)+ed.w);adjL[j].set(i,(adjL[j].get(i)||0)+ed.w);}
+  let member=ns.map((_,i)=>i);
+  for(let level=0;level<10;level++){
+    const N=adjL.length, k=adjL.map(a=>{let t=0;a.forEach(w=>t+=w);return t;}), m2=k.reduce((a,b)=>a+b,0)||1;
+    const comm=[...Array(N).keys()], tot=k.slice(); let moved=false, again=true, guard=0;
+    while(again&&guard++<50){again=false;
+      for(let i=0;i<N;i++){const ci=comm[i]; tot[ci]-=k[i]; const wc=new Map();
+        adjL[i].forEach((w,j)=>{if(j!==i) wc.set(comm[j],(wc.get(comm[j])||0)+w);});
+        let best=ci, bg=(wc.get(ci)||0)-tot[ci]*k[i]/m2;
+        wc.forEach((w,c)=>{const g=w-tot[c]*k[i]/m2; if(g>bg+1e-9){bg=g;best=c;}});
+        tot[best]+=k[i]; if(best!==ci){comm[i]=best;again=true;moved=true;}}}
+    if(!moved) break;
+    const ids=[...new Set(comm)], re=new Map(ids.map((c,i)=>[c,i]));
+    member=member.map(c=>re.get(comm[c]));
+    const nadj=ids.map(()=>new Map());
+    adjL.forEach((a,i)=>a.forEach((w,j)=>{const ci=re.get(comm[i]),cj=re.get(comm[j]);nadj[ci].set(cj,(nadj[ci].get(cj)||0)+w);}));
+    adjL=nadj;
+  }
+  G.nodes.forEach(n=>{n.comm=-1;});
+  const groups=new Map(); ns.forEach((n,i)=>{const c=member[i]; n.comm=c; if(!groups.has(c)) groups.set(c,[]); groups.get(c).push(n);});
+  return [...groups.values()].filter(g=>g.length>=5).map(g=>({nodes:g,name:g.slice().sort((a,b)=>b.m-a.m).slice(0,2).map(n=>n.e.n).join(' · ')}));
+}
+const BUB=document.createElement('canvas'), bctx=BUB.getContext('2d');
+// Soft translucent bubble behind each community: circles on its members plus thick strokes along its internal links.
+// Members far from the community's centre are left out so one stray node doesn't stretch the bubble across the web.
+function drawBubbles(T,focus,tint){
+  if(BUB.width!==cv.width||BUB.height!==cv.height){BUB.width=cv.width;BUB.height=cv.height;}
+  const out=[], R=30;
+  for(const c of G.comms){
+    bctx.setTransform(1,0,0,1,0,0); bctx.clearRect(0,0,BUB.width,BUB.height); bctx.setTransform(...T);
+    bctx.fillStyle=tint; bctx.strokeStyle=tint; bctx.lineCap='round';
+    let ms=c.nodes.filter(shown); if(ms.length<4) continue;
+    const cx=ms.reduce((a,n)=>a+n.x,0)/ms.length, cy=ms.reduce((a,n)=>a+n.y,0)/ms.length;
+    const ds=ms.map(n=>Math.hypot(n.x-cx,n.y-cy)).sort((a,b)=>a-b), med=ds[ds.length>>1];
+    ms=ms.filter(n=>Math.hypot(n.x-cx,n.y-cy)<=med*1.9+30); const keep=new Set(ms);
+    bctx.beginPath(); ms.forEach(n=>{const r=R+rad(n);bctx.moveTo(n.x+r,n.y);bctx.arc(n.x,n.y,r,0,Math.PI*2);}); bctx.fill();
+    bctx.lineWidth=R*1.7; bctx.beginPath();
+    for(const ed of G.edges) if(keep.has(ed.a)&&keep.has(ed.b)){bctx.moveTo(ed.a.x,ed.a.y);bctx.lineTo(ed.b.x,ed.b.y);}
+    bctx.stroke();
+    let top=1e9,tx=0; ms.forEach(n=>{const y=n.y-R-rad(n); if(y<top){top=y;tx=n.x;}});
+    out.push({name:c.name,x:cx,y:top+4/G.scale});
+    ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.globalAlpha=focus?.03:.065; ctx.drawImage(BUB,0,0); ctx.restore();
+  }
+  return out;
+}
 function step(){
   const ns=G.nodes.filter(shown), a=G.alpha;
   for(let i=0;i<ns.length;i++){const p=ns[i];for(let j=i+1;j<ns.length;j++){const q=ns[j];let dx=p.x-q.x,dy=p.y-q.y,d2=dx*dx+dy*dy;
     if(d2<1){dx=Math.random()-.5;dy=Math.random()-.5;d2=1;} if(d2>490000) continue;
-    const d=Math.sqrt(d2), md=rad(p)+rad(q)+26, f=REP*a*(1+Math.min(p.deg,q.deg)*.04)/d2+(d<md?(md-d)*.3:0), fx=dx/d*f, fy=dy/d*f; p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy;}}
+    const d=Math.sqrt(d2), md=rad(p)+rad(q)+26, f=REP*a*(1+Math.min(p.deg,q.deg)*.04)*(p.comm>=0&&q.comm>=0&&p.comm!==q.comm?1.6:1)/d2+(d<md?(md-d)*.3:0), fx=dx/d*f, fy=dy/d*f; p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy;}}
   for(const ed of G.edges){const p=ed.a,q=ed.b; if(!shown(p)||!shown(q)) continue;
-    const dx=q.x-p.x,dy=q.y-p.y,d=Math.sqrt(dx*dx+dy*dy)||1,k=G.mode==='co'?.005+.015*Math.min(1,Math.log2(1+ed.w)/4):.02,f=(d-130-rad(p)-rad(q))*k*a,fx=dx/d*f,fy=dy/d*f;
+    const dx=q.x-p.x,dy=q.y-p.y,d=Math.sqrt(dx*dx+dy*dy)||1,k=G.mode==='co'?.005+.015*Math.min(1,Math.log2(1+ed.w)/4):.02,same=p.comm>=0&&p.comm===q.comm,f=(d-(same?110:170)-rad(p)-rad(q))*k*(same?1.5:.45)*a,fx=dx/d*f,fy=dy/d*f;
     p.vx+=fx;p.vy+=fy;q.vx-=fx;q.vy-=fy;}
-  const ar=G.w&&G.h?G.w/G.h:1.6, gx=.0024/ar, gy=.0034*ar;
-  for(const n of ns){const pull=n.deg<=1?4:1; n.vx-=n.x*gx*pull*a;n.vy-=n.y*gy*pull*a; if(n===G.drag){n.vx=n.vy=0;continue;} n.vx*=.8;n.vy*=.8;n.x+=n.vx;n.y+=n.vy;}
+  const cc=new Map(); for(const n of ns){ if(n.comm<0) continue; const c=cc.get(n.comm)||{x:0,y:0,k:0}; c.x+=n.x;c.y+=n.y;c.k++; cc.set(n.comm,c); }
+  for(const n of ns){ const c=cc.get(n.comm); if(!c||c.k<5) continue; n.vx+=(c.x/c.k-n.x)*.006*a; n.vy+=(c.y/c.k-n.y)*.006*a; }
+  const ar=G.w&&G.h?G.w/G.h:1.6, gx=.0016/ar, gy=.0042*ar;
+  for(const n of ns){const pull=n.small?7:n.deg<=1?2:1; n.vx-=n.x*gx*pull*a;n.vy-=n.y*gy*pull*a; if(n===G.drag){n.vx=n.vy=0;continue;} n.vx*=.8;n.vy*=.8;n.x+=n.vx;n.y+=n.vy;}
   G.alpha=Math.max(G.alpha*.985,G.drag?.15:0);
 }
-function loop(){G.raf=0; if(G.alpha>.008||G.drag){step();step();draw();G.raf=requestAnimationFrame(loop);} else draw();}
+function loop(){G.raf=0; if(G.alpha>.008||G.drag){step();step();draw();G.raf=requestAnimationFrame(loop);} else {draw(); if(!G.moved) camTo(fitTarget(G.nodes.filter(shown)),500);}}
 function kick(a){G.alpha=Math.max(G.alpha,a); if(!G.raf) G.raf=requestAnimationFrame(loop);}
 function resizeCanvas(){
   const r=$('#stage').getBoundingClientRect(); if(!r.width) return;
@@ -1010,8 +1078,8 @@ function fitTarget(ns){
   if(!ns.length||!G.w) return [G.scale,G.tx,G.ty];
   let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9; ns.forEach(n=>{const r=rad(n);x0=Math.min(x0,n.x-r);x1=Math.max(x1,n.x+r);y0=Math.min(y0,n.y-r);y1=Math.max(y1,n.y+r);});
   const lp=leftPad(), aw=G.w-lp;
-  const s=Math.max(.25,Math.min(2.2,Math.min(aw/(x1-x0+260),G.h/(y1-y0+80))));
-  return [s,-(x0+x1)/2*s+lp/2-40*s,-(y0+y1)/2*s];
+  const s=Math.max(.25,Math.min(2.2,Math.min(aw/(x1-x0+170),G.h/(y1-y0+40))));
+  return [s,-(x0+x1)/2*s+lp/2-30*s,-(y0+y1)/2*s];
 }
 function fitNow(){const [s,x,y]=fitTarget(G.nodes.filter(shown));G.scale=s;G.tx=x;G.ty=y;draw();}
 let camRaf=0;
@@ -1022,7 +1090,7 @@ function camTo([s,x,y],ms=800){
   const f=t=>{const k=Math.min(1,(t-t0)/ms),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;G.scale=s0+(s-s0)*e;G.tx=x0+(x-x0)*e;G.ty=y0+(y-y0)*e;draw();if(k<1)camRaf=requestAnimationFrame(f);};
   camRaf=requestAnimationFrame(f);
 }
-function camOn(id,scale){const n=G.byId[id]; if(!n) return; const nbs=[n,...[...G.nb.get(id)].map(x=>G.byId[x])].filter(shown);
+function camOn(id,scale){G.moved=true;const n=G.byId[id]; if(!n) return; const nbs=[n,...[...G.nb.get(id)].map(x=>G.byId[x])].filter(shown);
   const t=fitTarget(nbs); camTo(scale?[scale,-n.x*scale+leftPad()/2,-n.y*scale]:t);}
 function drawShape(g,x,y,r){
   ctx.beginPath();
@@ -1039,6 +1107,8 @@ function draw(){
   ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
   ctx.setTransform(d*G.scale,0,0,d*G.scale,d*(G.w/2+G.tx),d*(G.h/2+G.ty));
   const focus=G.hover||G.sel, nb=focus?G.nb.get(focus.id)||new Set():null, S_=G.story;
+  const T=[d*G.scale,0,0,d*G.scale,d*(G.w/2+G.tx),d*(G.h/2+G.ty)];
+  const bub=!S_&&G.mode==='co'&&$('#bubT').checked&&G.comms?drawBubbles(T,focus,ink):[];
   // edges
   let edges=G.edges;
   if(S_){edges=[];CO_PS.forEach((ps,k)=>{const w=ps[S_];if(!w)return;const [a,b]=k.split('|'),n=G.byId[a],m=G.byId[b];if(n&&m)edges.push({a:n,b:m,w});});}
@@ -1050,7 +1120,7 @@ function draw(){
   // nodes
   const dimmed=n=>(focus&&n!==focus&&!nb.has(n.id))||(S_&&!inStory(n));
   for(const n of G.nodes){ if(!shown(n)) continue;
-    const g=grp(n), r=S_&&inStory(n)?2.6+Math.sqrt(mc(n.id,S_))*1.6:rad(n);
+    const g=grp(n), r=S_&&inStory(n)?4+Math.sqrt(mc(n.id,S_))*2.3:rad(n);
     ctx.globalAlpha=dimmed(n)?.16:1; drawShape(g,n.x,n.y,r);
     if(!n.m){ctx.strokeStyle=col[g];ctx.lineWidth=1.6/G.scale;ctx.stroke();}
     else{ctx.fillStyle=col[g];ctx.fill();ctx.strokeStyle=paper;ctx.lineWidth=1.5/G.scale;ctx.stroke();}
@@ -1064,19 +1134,24 @@ function draw(){
     cand.push({n,pr:(n===focus?1e7:0)+(isNb?1e6:0)+(S_?mc(n.id,S_):n.m)});}
   cand.sort((a,b)=>b.pr-a.pr);
   const boxes=[], free=b=>boxes.every(o=>b.x1<o.x0||b.x0>o.x1||b.y1<o.y0||b.y0>o.y1);
+  if(!focus){ const cfs=14/G.scale; ctx.font=`700 ${cfs}px "Courier Prime", monospace`; ctx.textAlign='center';
+    for(const b of bub){const t=b.name.toUpperCase(), tw=ctx.measureText(t).width, bx={x0:b.x-tw/2,x1:b.x+tw/2,y0:b.y-cfs*.7,y1:b.y+cfs*.7};
+      if(!free(bx)) continue; boxes.push(bx);
+      ctx.globalAlpha=.9; ctx.lineWidth=5/G.scale; ctx.strokeStyle=paper; ctx.strokeText(t,b.x,b.y); ctx.fillStyle=accent; ctx.fillText(t,b.x,b.y);}
+    ctx.textAlign='left'; ctx.globalAlpha=1; }
   for(const {n} of cand){
-    const r=S_&&inStory(n)?2.6+Math.sqrt(mc(n.id,S_))*1.6:rad(n), fs=(n===focus?15:n.m>=120?14:12.5)/G.scale;
+    const r=S_&&inStory(n)?4+Math.sqrt(mc(n.id,S_))*2.3:rad(n), fs=(n===focus?19:n.m>=120?17.5:15.5)/G.scale;
     ctx.font=`${n===focus?'600 ':''}${fs}px Spectral, Georgia, serif`;
     const tw=ctx.measureText(n.e.n).width, gap=4/G.scale, hh=fs*.62;
     let x=n.x+r+gap, b={x0:x,x1:x+tw,y0:n.y-hh,y1:n.y+hh};
     if(!free(b)){x=n.x-r-gap-tw; b={x0:x,x1:x+tw,y0:n.y-hh,y1:n.y+hh};}
     if(!free(b)&&n!==focus) continue;
     boxes.push(b);
-    ctx.lineWidth=4/G.scale; ctx.strokeStyle=paper; ctx.strokeText(n.e.n,x,n.y); ctx.fillStyle=ink; ctx.fillText(n.e.n,x,n.y); }
+    ctx.lineWidth=5/G.scale; ctx.strokeStyle=paper; ctx.strokeText(n.e.n,x,n.y); ctx.fillStyle=ink; ctx.fillText(n.e.n,x,n.y); }
 }
 function toWorld(ev){const r=cv.getBoundingClientRect(),sx=ev.clientX-r.left,sy=ev.clientY-r.top;return {sx,sy,x:(sx-G.w/2-G.tx)/G.scale,y:(sy-G.h/2-G.ty)/G.scale};}
 function hit(p){let best=null,bd=1e9;for(const n of G.nodes){if(!shown(n))continue;const d=Math.hypot(n.x-p.x,n.y-p.y);if(d<rad(n)+7/G.scale&&d<bd){bd=d;best=n;}}return best;}
-function zoomAt(sx,sy,f){const wx=(sx-G.w/2-G.tx)/G.scale,wy=(sy-G.h/2-G.ty)/G.scale,ns=Math.max(.25,Math.min(4,G.scale*f));G.tx=sx-G.w/2-wx*ns;G.ty=sy-G.h/2-wy*ns;G.scale=ns;draw();}
+function zoomAt(sx,sy,f){G.moved=true;const wx=(sx-G.w/2-G.tx)/G.scale,wy=(sy-G.h/2-G.ty)/G.scale,ns=Math.max(.25,Math.min(4,G.scale*f));G.tx=sx-G.w/2-wx*ns;G.ty=sy-G.h/2-wy*ns;G.scale=ns;draw();}
 const tip=$('#tip');
 function showTip(n,p){
   if(!n){tip.hidden=true;return;}
@@ -1089,7 +1164,7 @@ function showTip(n,p){
   tip.style.left=x+'px'; tip.style.top=y+'px';
 }
 let ptr=null;
-cv.addEventListener('pointerdown',ev=>{cv.setPointerCapture(ev.pointerId);tip.hidden=true;cancelAnimationFrame(camRaf);const p=toWorld(ev),n=hit(p);ptr={x:ev.clientX,y:ev.clientY,tx:G.tx,ty:G.ty,node:n,moved:false};if(n)G.drag=n;else cv.style.cursor='grabbing';});
+cv.addEventListener('pointerdown',ev=>{G.moved=true;cv.setPointerCapture(ev.pointerId);tip.hidden=true;cancelAnimationFrame(camRaf);const p=toWorld(ev),n=hit(p);ptr={x:ev.clientX,y:ev.clientY,tx:G.tx,ty:G.ty,node:n,moved:false};if(n)G.drag=n;else cv.style.cursor='grabbing';});
 cv.addEventListener('pointermove',ev=>{
   if(!ptr){const p=toWorld(ev),n=hit(p);if(n!==G.hover){G.hover=n;cv.style.cursor=n?'pointer':'grab';draw();}showTip(n,p);return;}
   const dx=ev.clientX-ptr.x,dy=ev.clientY-ptr.y; if(Math.abs(dx)+Math.abs(dy)>4) ptr.moved=true;
@@ -1103,7 +1178,8 @@ let zhT=0;
 cv.addEventListener('wheel',ev=>{
   if(!(ev.ctrlKey||ev.metaKey)){const z=$('#zhint');z.hidden=false;clearTimeout(zhT);zhT=setTimeout(()=>{z.hidden=true;},1400);return;}
   ev.preventDefault();const p=toWorld(ev);zoomAt(p.sx,p.sy,Math.exp(-ev.deltaY*.004));},{passive:false});
-$('#zIn').onclick=()=>zoomAt(G.w/2,G.h/2,1.3); $('#zOut').onclick=()=>zoomAt(G.w/2,G.h/2,1/1.3); $('#zFit').onclick=()=>camTo(fitTarget(G.nodes.filter(shown)));
+$('#zIn').onclick=()=>zoomAt(G.w/2,G.h/2,1.3); $('#zOut').onclick=()=>zoomAt(G.w/2,G.h/2,1/1.3); $('#zFit').onclick=()=>{G.moved=false;camTo(fitTarget(G.nodes.filter(shown)));};
+$('#bubT').onchange=()=>draw();
 function renderLegend(){
   const vis=E.filter(isVis);
   $('#legend').innerHTML=G_ORDER.map(g=>`<button class="chip" data-g="${g}" aria-pressed="${!G.hidden.has(g)}">${gshp(g)}${GROUPS[g]}<span class="n">${vis.filter(e=>GROUP[e.c]===g).length}</span></button>`).join('');
@@ -1129,7 +1205,7 @@ $('#findIn').addEventListener('change',ev=>{const q=ev.target.value.trim().toLow
   G.sel=n; camOn(e.id,1.6); ev.target.value='';});
 function focusNode(id){setView('dive');const n=G.byId[id];if(!n)return;G.hidden.delete(grp(n));renderLegend();G.sel=n;
   document.getElementById('web').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});camOn(id,1.5);}
-new ResizeObserver(()=>{if(st.view==='dive'){resizeCanvas();}}).observe($('#stage'));
+new ResizeObserver(()=>{if(st.view==='dive'){resizeCanvas(); if(G.built&&!G.moved) fitNow();}}).observe($('#stage'));
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>{draw();renderFindings();});
 new MutationObserver(()=>{draw();renderFindings();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
@@ -1169,9 +1245,9 @@ function renderTour(){
     <button class="btn solid" data-tour="next">${tourI===TOUR.length-1?'Explore':tourI===0?'Start the tour':'Next'}</button></div>`;
 }
 $('#tour').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
-  if(b.dataset.tour==='close'){$('#tour').hidden=true;$('#tourMin').hidden=false;return;}
+  if(b.dataset.tour==='close'){$('#tour').hidden=true;$('#tourMin').hidden=false;G.moved=false;camTo(fitTarget(G.nodes.filter(shown)));return;}
   if(b.dataset.tour==='prev') tourGo(tourI-1);
-  else if(b.dataset.tour==='next'){ if(tourI===TOUR.length-1){$('#tour').hidden=true;$('#tourMin').hidden=false;} else tourGo(tourI+1); }
+  else if(b.dataset.tour==='next'){ if(tourI===TOUR.length-1){$('#tour').hidden=true;$('#tourMin').hidden=false;G.moved=false;camTo(fitTarget(G.nodes.filter(shown)));} else tourGo(tourI+1); }
   else if(b.dataset.tourI!=null) tourGo(+b.dataset.tourI);
 });
 $('#tourMin').onclick=()=>{$('#tour').hidden=false;$('#tourMin').hidden=true;tourGo(0);};
