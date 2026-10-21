@@ -300,9 +300,9 @@ footer b{color:var(--ink);font-weight:600}
 <div id="v-dive">
   <section class="hero in">
     <div>
-    <p class="kicker">A data deep dive into the fiction of H.&nbsp;P.&nbsp;Lovecraft</p>
-    <h1>Every name in the Mythos, counted and connected</h1>
-    <p class="dek">We read Lovecraft's own stories and counted each time he names one of his gods, creatures, people, places or forbidden books, and which names turn up in the same paragraph. <b>The web below is the result.</b> Take the tour, or just start clicking. A small warning: reading about gods costs sanity.</p>
+    <p class="kicker">Being an inquiry, by numbers, into the fiction of H.&nbsp;P.&nbsp;Lovecraft</p>
+    <h1>Every name in the Mythos, numbered and correlated</h1>
+    <p class="dek">I have gone through Lovecraft's own tales and set down every occasion on which he names one of his gods, his creatures, his men and women, his places or his forbidden books, and every paragraph in which two such names lie together. <b>The web below is the fruit of that labour.</b> The reader may follow the tour, or venture in unguided. But let it be understood at the outset that to read of the gods is to pay for it in sanity.</p>
     </div>
     <ul class="stats" id="stats"></ul>
   </section>
@@ -326,15 +326,15 @@ footer b{color:var(--ink);font-weight:600}
       <div class="zhint" id="zhint" hidden>Hold Ctrl (or ⌘) and scroll to zoom, or use the buttons</div>
       <div class="zoom"><button id="zIn" aria-label="Zoom in">+</button><button id="zOut" aria-label="Zoom out">−</button><button id="zFit" aria-label="Fit to view">⤢</button></div>
     </div>
-    <p class="method"><button class="linkbtn" data-view="method" style="float:right;margin-left:12px">Full methodology →</button><b>How to read it.</b> Shape and colour show the group. Size is how many times Lovecraft names the entry. A line means two names share a paragraph, and thicker lines share more. Counts are pattern matches on each entry's names and a few fixed aliases (every entry lists its patterns), run over the hplovecraft.com e-texts and spot-checked against the Complete Works. Pronouns aren't counted, so first-person narrators look small. Hollow shapes are never named at all.</p>
+    <p class="method"><button class="linkbtn" data-view="method" style="float:right;margin-left:12px">Full methodology →</button><b>How the web is to be read.</b> Shape and colour denote the group; size, the number of times Lovecraft names the entry. A line signifies that two names share a paragraph, and the thicker the line, the more paragraphs they share. The counts are pattern-matches upon each entry's names and a few fixed aliases (every entry discloses its patterns), run over the hplovecraft.com texts and tested here and there against the Complete Works. Pronouns are not counted, so that narrators who speak only as "I" appear pitifully small. The hollow shapes are those never named at all.</p>
   </section>
 
   <section class="findings in" id="findings">
-    <div class="f-head"><p class="lbl">Findings</p><h2>What the counts say</h2></div>
+    <div class="f-head"><p class="lbl">Findings</p><h2>What the counts disclose</h2></div>
     <div class="f-grid">
       <figure class="fig" style="margin:0">
         <p class="lbl">01 · Frequency</p>
-        <h3 id="barsTitle">Who Lovecraft names most</h3>
+        <h3 id="barsTitle">Whom Lovecraft names most</h3>
         <p class="sub" id="barsSub"></p>
         <div class="fchips" id="barChips"></div>
         <div id="bars"></div>
@@ -342,7 +342,7 @@ footer b{color:var(--ink);font-weight:600}
       </figure>
       <figure class="fig" style="margin:0">
         <p class="lbl">02 · Distribution</p>
-        <h3>Where the Mythos lives</h3>
+        <h3>Where the Mythos dwells</h3>
         <p class="sub" id="heatSub"></p>
         <div class="scroll"><div id="heat"></div></div>
         <div class="ramp"><span>Fewer</span><i></i><span id="rampMax">More mentions</span></div>
@@ -356,14 +356,14 @@ footer b{color:var(--ink);font-weight:600}
       </figure>
       <figure class="fig half" style="margin:0">
         <p class="lbl">04 · Bonds</p>
-        <h3>The strongest bonds</h3>
-        <p class="sub">The pairs named together in the most paragraphs. Click one to see it in the web.</p>
+        <h3>The closest bonds</h3>
+        <p class="sub">Those pairs which share the greatest number of paragraphs. Click one to behold it in the web.</p>
         <ol class="bonds" id="bonds"></ol>
       </figure>
       <figure class="fig" style="margin:0">
         <p class="lbl">05 · Absence</p>
         <h3>Named, or only implied?</h3>
-        <p class="sub">Lovecraft's horrors often go unnamed, and so do his narrators.</p>
+        <p class="sub">Lovecraft's horrors are very often nameless; and so, for that matter, are his narrators.</p>
         <div class="tiles" id="tiles"></div>
       </figure>
     </div>
@@ -371,7 +371,7 @@ footer b{color:var(--ink);font-weight:600}
 </div>
 
 <section class="view in" id="v-catalogue" hidden>
-  <div class="v-head"><h2>The Catalogue</h2><p>Every entry as a library card. Opening one costs sanity the first time.</p></div>
+  <div class="v-head"><h2>The Catalogue</h2><p>Every entry set down upon a card, after the fashion of the stacks at Miskatonic. The first consulting of each will cost the reader some portion of sanity.</p></div>
   <div class="filters">
     <div class="search"><input id="q" type="search" placeholder="Search names, epithets, lore…" aria-label="Search the catalogue"></div>
     <div class="chips" id="catChips"></div>
@@ -382,50 +382,50 @@ footer b{color:var(--ink);font-weight:600}
 </section>
 
 <section class="view in" id="v-stories" hidden>
-  <div class="v-head"><h2>The Stories</h2><p>In order of composition, each with its cast ranked by how often they're named.</p></div>
+  <div class="v-head"><h2>The Stories</h2><p>Set down in the order of their writing, each with its cast ranked by the frequency of their naming.</p></div>
   <ol class="stories" id="storyList"></ol>
 </section>
 
 <section class="view in" id="v-method" hidden>
-  <div class="v-head"><h2>Methodology</h2><p>How the counts behind the web were made, checked and limited.</p></div>
+  <div class="v-head"><h2>Methodology</h2><p>Of how the counts behind the web were made and tested, and where they fall short.</p></div>
   <nav class="mtoc" aria-label="On this page"><a href="#m-corpus">Corpus</a><a href="#m-entries">Entries</a><a href="#m-mentions">Mentions</a><a href="#m-co">Co-mentions</a><a href="#m-check">Validation</a><a href="#m-limits">Limitations</a><a href="#m-viz">Visual encoding</a><a href="#m-repro">Reproducing</a><a href="#m-table">Every pattern</a></nav>
   <div class="prose">
-    <p>The Arkham Index asks one question of Lovecraft's fiction: <b>how often does he name each god, creature, person, place and book, and which names does he put together?</b> Every number on this site comes from one pipeline. It fetches the stories, splits them into paragraphs, runs a fixed set of search patterns over every paragraph, and records what it finds. The current corpus gives <span data-k="mentions">—</span> name mentions of <span data-k="entries">—</span> entries across <span data-k="stories">—</span> stories, and <span data-k="pairs">—</span> pairs of entries named in the same paragraph.</p>
+    <p>The Arkham Index puts but one question to Lovecraft's fiction: <b>how often does he name each god, creature, person, place and book, and which names does he set side by side?</b> Every number upon this site issues from a single pipeline. It fetches the stories, divides them into paragraphs, runs a fixed set of search patterns over every paragraph, and records what it finds. The present corpus yields <span data-k="mentions">—</span> name mentions of <span data-k="entries">—</span> entries across <span data-k="stories">—</span> stories, and <span data-k="pairs">—</span> pairs of entries named within the same paragraph.</p>
 
     <h3 id="m-corpus">1. Corpus</h3>
-    <p>The corpus is <span data-k="stories">—</span> stories (<span data-k="words">—</span> words): <span data-k="solo">—</span> written by Lovecraft alone, plus <span data-k="revs">—</span> revisions and collaborations he ghost-wrote or substantially rewrote. These are tagged throughout, and the <b>Revisions</b> switch removes them and their counts everywhere on the site. The stories cover the Mythos-relevant fiction from "Dagon" (1917) to "The Haunter of the Dark" (1935). Juvenilia, poetry and stories with no Mythos entities are left out.</p>
-    <p>The texts are the e-texts published at hplovecraft.com, one page per story. Paragraphs are the site's own paragraph breaks. Word counts split on whitespace. Years are dates of composition, not publication.</p>
+    <p>The corpus consists of <span data-k="stories">—</span> stories (<span data-k="words">—</span> words): <span data-k="solo">—</span> written by Lovecraft alone, and <span data-k="revs">—</span> revisions and collaborations which he ghost-wrote or substantially rewrote. These are marked throughout, and the <b>Revisions</b> switch banishes them and their counts from every part of the site. The stories span the Mythos-bearing fiction from "Dagon" (1917) to "The Haunter of the Dark" (1935). Juvenilia, verse, and tales without any Mythos entity are excluded.</p>
+    <p>The texts are those published at hplovecraft.com, one page to a story. Paragraphs follow that site's own breaks. Words are counted by splitting on whitespace. Years are those of composition, not of publication.</p>
     <details class="tbl"><summary>Show the corpus</summary><div class="scroll"><table class="mtable"><thead><tr><th>Year</th><th>Story</th><th>Words</th><th>Names counted</th></tr></thead><tbody id="mCorpus"></tbody></table></div></details>
 
     <h3 id="m-entries">2. What counts as an entry</h3>
-    <p>Entries are chosen by hand, using one canon rule: <b>only what appears in Lovecraft's own fiction</b>. August Derleth's additions and later writers' creations are excluded. A few names Lovecraft borrowed from friends (Tsathoggua, the Book of Eibon, the Hounds of Tindalos, von Junzt's <i>Unaussprechlichen Kulten</i>) are included, and flagged, because Lovecraft wrote them into his own stories.</p>
-    <p>Each entry belongs to one of eight categories, which the web folds into four groups: gods and Great Old Ones; creatures and races; people and cults; places and books. The descriptions, epithets and "curated connections" are written by hand and are editorial. The counts are not.</p>
+    <p>Entries were chosen by hand under a single canon rule: <b>only what appears in Lovecraft's own fiction</b>. August Derleth's accretions and the inventions of later writers are excluded. A few names Lovecraft borrowed from his friends (Tsathoggua, the Book of Eibon, the Hounds of Tindalos, von Junzt's <i>Unaussprechlichen Kulten</i>) are admitted, and so marked, because he wrote them into his own tales.</p>
+    <p>Each entry belongs to one of eight categories, which the web folds into four groups: gods and Great Old Ones; creatures and races; people and cults; places and books. The descriptions, epithets and "curated connections" are written by hand, and are matters of editorial judgment. The counts are not.</p>
 
     <h3 id="m-mentions">3. Counting mentions</h3>
-    <p>Each entry has one or more <b>regular-expression patterns</b>: its name, plus a few fixed aliases where Lovecraft uses another name for the same thing. Examples: <code>Tulu</code> for Cthulhu in <i>The Mound</i>, <code>Outer Ones</code> for the Mi-Go in <i>The Whisperer in Darkness</i>, and <code>Black Man</code> for Nyarlathotep in <i>The Dreams in the Witch House</i>. The rules:</p>
+    <p>Each entry has one or more <b>regular-expression patterns</b>: its name, together with a few fixed aliases where Lovecraft employs another name for the same thing. Thus <code>Tulu</code> for Cthulhu in <i>The Mound</i>, <code>Outer Ones</code> for the Mi-Go in <i>The Whisperer in Darkness</i>, and <code>Black Man</code> for Nyarlathotep in <i>The Dreams in the Witch House</i>. The rules are these:</p>
     <ol>
-      <li><b>Case-sensitive</b>, unless a pattern allows both cases (<code>[Gg]houls?</code>). This keeps "West" the man apart from "west" the direction.</li>
-      <li><b>Word boundaries</b> where needed, so <code>\bYig\b</code> doesn't match inside other words.</li>
-      <li><b>Story scoping.</b> A pattern that is ambiguous across the corpus only runs in the stories where it's unambiguous. <code>\bWest\b</code> runs only in <i>Herbert West—Reanimator</i>, <code>\bLake\b</code> only in <i>At the Mountains of Madness</i>, and <code>Innsmouth</code> everywhere except "Celephaïs", whose Innsmouth is a Cornish village.</li>
-      <li><b>Normalisation.</b> Curly apostrophes are straightened before matching, so R’lyeh and R'lyeh count the same.</li>
-      <li><b>Every match counts.</b> A name used three times in a paragraph counts three times.</li>
+      <li><b>Case matters</b>, unless a pattern admits both cases (<code>[Gg]houls?</code>). Thus "West" the man is kept apart from "west" the direction.</li>
+      <li><b>Word boundaries</b> where needful, so that <code>\bYig\b</code> does not match within other words.</li>
+      <li><b>Story scoping.</b> A pattern that is ambiguous across the corpus runs only in those stories where it is not. <code>\bWest\b</code> runs only in <i>Herbert West—Reanimator</i>, <code>\bLake\b</code> only in <i>At the Mountains of Madness</i>, and <code>Innsmouth</code> everywhere save "Celephaïs", whose Innsmouth is a Cornish village.</li>
+      <li><b>Normalisation.</b> Curled apostrophes are straightened before matching, so that R’lyeh and R'lyeh count alike.</li>
+      <li><b>Every match counts.</b> A name thrice used in one paragraph counts three times.</li>
     </ol>
-    <p>An entry's "Appears in" list combines the stories where it was matched with stories where a hand check found it present but unnamed, such as a narrator. Present-but-unnamed stories show a dash instead of a count.</p>
+    <p>An entry's "Appears in" list unites the stories in which it was matched with those in which a reading by hand found it present but unnamed, as with a narrator. Such stories show a dash in place of a count.</p>
 
     <h3 id="m-co">4. Co-mentions (the links in the web)</h3>
-    <p>Two entries are <b>co-mentioned</b> when both are matched in the same paragraph. Each pair counts <b>at most once per paragraph</b>, however many times either name appears. A link's weight is the number of paragraphs the pair shares across the corpus, and its thickness grows with that weight. The "at least" slider hides links below a chosen weight (default 2), which removes one-off coincidences.</p>
-    <p>The paragraph is the unit because it is the smallest span where Lovecraft reliably keeps one subject in view. Sentences are too short to catch an invocation followed by its effect. Whole stories are too coarse, since everything in a story would link to everything else.</p>
+    <p>Two entries are <b>co-mentioned</b> when both are matched within the same paragraph. Each pair counts <b>no more than once in a paragraph</b>, however often either name recurs. A link's weight is the number of paragraphs the pair shares across the corpus, and its thickness swells with that weight. The "at least" slider hides links beneath a chosen weight (by default 2), which clears away the one-off coincidences.</p>
+    <p>The paragraph is the unit because it is the smallest span within which Lovecraft reliably keeps a single subject in view. A sentence is too brief to catch an invocation together with its effect; a whole story is too coarse, since everything in it would be bound to everything else.</p>
 
     <h3 id="m-check">5. Validation</h3>
     <ul>
-      <li><b>Second source.</b> The text itself was checked against a separate edition, the <i>Complete Works</i> PDF, by counting raw names in both. "Akeley" (135), "Wilbur" (48), "Curwen" (204), "Gilman" (122) and "Necronomicon" (49) appear the same number of times in each. This checks the transcription, not who a name refers to: only 103 of those 122 "Gilman"s are Walter Gilman. Other totals differ in both directions for known reasons: the PDF leaves out the five revisions (it never mentions Zamacona) and includes stories outside this corpus.</li>
-      <li><b>Review of low counts.</b> Suspiciously small totals were read in context, which led to three corrections:
+      <li><b>Second source.</b> The text itself was tested against a separate edition, the <i>Complete Works</i> PDF, by counting raw names in both. "Akeley" (135), "Wilbur" (48), "Curwen" (204), "Gilman" (122) and "Necronomicon" (49) appear the same number of times in each. This tests the transcription, not whom a name denotes: only 103 of those 122 "Gilman"s are Walter Gilman. Other totals differ in both directions, for reasons that are understood: the PDF omits the five revisions (it never once mentions Zamacona) and includes stories outside this corpus.</li>
+      <li><b>Review of low counts.</b> Totals suspiciously small were read in their context, and three corrections followed:
         <ul>
-          <li><i>The Shadow over Innsmouth</i> calls the Deep Ones "Deep Ones" only twice. Their usual names ("them things", "sea-things", "fish-frogs") were added as scoped aliases.</li>
+          <li><i>The Shadow over Innsmouth</i> calls the Deep Ones by that name only twice. Their customary names ("them things", "sea-things", "fish-frogs") were added as scoped aliases.</li>
           <li>In <i>The Shadow Out of Time</i>, "Elder Things" means the flying polyps, not the beings of <i>Mountains of Madness</i>, so those matches go to the polyps.</li>
           <li>"Old Ones" in <i>Mountains of Madness</i> excludes "Great Old Ones".</li>
         </ul></li>
-      <li><b>Review of stray matches.</b> Every match in a story outside an entry's expected stories was read in context. Most are Lovecraft name-dropping his own creations, and they stay. Six were other things with the same name and were removed by scoping:
+      <li><b>Review of stray matches.</b> Every match in a story outside an entry's expected stories was read in its context. Most are Lovecraft idly naming his own creations, and they remain. Six proved to be other things bearing the same name, and were removed by scoping:
         <ul>
           <li>"Gilman" in <i>The Shadow over Innsmouth</i> and <i>The Thing on the Doorstep</i> is the Gilman House hotel and the Innsmouth Gilman family, not Walter (19 matches).</li>
           <li>"Ghoul" in <i>Charles Dexter Ward</i>, "The Hound", <i>Herbert West</i> and "The Nameless City" means grave-robbers or is a figure of speech (11).</li>
@@ -434,31 +434,31 @@ footer b{color:var(--ink);font-weight:600}
           <li>"Thurston" in <i>Charles Dexter Ward</i> is Thurston's Tavern (1).</li>
           <li>"Elder Things" in <i>The Dunwich Horror</i> is Armitage's vague phrase, not the Antarctic beings (1).</li>
         </ul></li>
-      <li><b>Readable patterns.</b> Every entry shows its exact patterns, in its card and in the table below, so any count can be checked.</li>
+      <li><b>Readable patterns.</b> Every entry discloses its exact patterns, upon its card and in the table below, so that any count may be checked.</li>
     </ul>
 
     <h3 id="m-limits">6. Limitations</h3>
     <ul>
-      <li><b>Pronouns aren't counted.</b> First-person narrators come out tiny: Thurston and Dyer are named only a handful of times, and <span data-k="never">—</span> entries are never named at all. Read a node's size as how often it's named, not how important it is.</li>
-      <li><b>Aliases are judgment calls.</b> Adding or leaving out an alias changes a count. The choices are listed so you can disagree with them.</li>
-      <li><b>Some scoped patterns are broad.</b> "colour" in <i>The Colour Out of Space</i>, "city" in <i>Mountains of Madness</i> and <i>The Shadow Out of Time</i>, and "cats" in the Ulthar stories also catch some generic uses, so those counts run high.</li>
-      <li><b>Name collisions.</b> "Ward" also catches Charles's father, "de la Poer" catches the whole family, and both "Edward" and "Derby" are counted for Edward Derby.</li>
-      <li><b>Paragraph length varies.</b> <i>Charles Dexter Ward</i> has long paragraphs, which inflates co-mentions within it.</li>
-      <li><b>One edition.</b> Spelling and paragraph breaks follow a single e-text source.</li>
+      <li><b>Pronouns are not counted.</b> First-person narrators come out pitifully small: Thurston and Dyer are named but a handful of times, and <span data-k="never">—</span> entries are never named at all. A node's size tells how often it is named, not how much it matters.</li>
+      <li><b>Aliases are matters of judgment.</b> To add or omit an alias alters a count. The choices are set down so that the reader may dispute them.</li>
+      <li><b>Some scoped patterns cast a wide net.</b> "colour" in <i>The Colour Out of Space</i>, "city" in <i>Mountains of Madness</i> and <i>The Shadow Out of Time</i>, and "cats" in the Ulthar stories also catch some generic uses, so those counts run high.</li>
+      <li><b>Collisions of name.</b> "Ward" also catches Charles's father, "de la Poer" catches the whole family, and both "Edward" and "Derby" are counted for Edward Derby.</li>
+      <li><b>Paragraphs vary in length.</b> <i>Charles Dexter Ward</i> is built of long paragraphs, which swells the co-mentions within it.</li>
+      <li><b>A single edition.</b> Spelling and paragraph breaks follow one e-text source.</li>
     </ul>
 
     <h3 id="m-viz">7. Visual encoding</h3>
-    <p>In the web, a node's radius grows with the square root of its mention count, so its <b>area</b>, not its width, tracks the count. Positions come from a force simulation: linked entries pull together and all entries push apart. The layout is stretched to fit the shape of the screen. Closeness means "often named together." Absolute position means nothing, and the layout changes slightly on each visit. Hollow shapes are entries that are never named. Labels are drawn in order of mention count, and a label that would overlap one already drawn is hidden until you zoom in or hover.</p>
-    <p><b>Clusters.</b> The shaded bubbles are communities found by the Louvain method, which groups entries so that more of the shared-paragraph weight falls inside groups than chance would predict. It runs on the links currently drawn, so it changes with the "at least" slider and the revisions switch. Groups with fewer than five members get no bubble. Each bubble is named after its two most-named members. The algorithm draws the groups, not an editor, so a bubble may cut across a story cycle where Lovecraft's own crossovers pull it.</p>
-    <p>The four group colours were checked with a colour-vision validator against the page background, for every pair of colours. All four pass the standard tests for colour-blind and full-colour readers. Each group also has its own shape, so colour is never the only cue. The heatmap uses a single-hue scale on a square-root curve, so rare names stay visible next to common ones.</p>
+    <p>In the web, a node's radius grows with the square root of its mention count, so that its <b>area</b>, not its breadth, follows the count. Positions arise from a force simulation: linked entries draw together and all entries thrust apart. The layout is stretched to the shape of the screen. Nearness means "often named together"; absolute position means nothing, and the arrangement shifts a little upon every visit. Hollow shapes are entries never named. Labels are drawn in order of mention count, and any label that would overlap one already drawn is withheld until you zoom in or hover.</p>
+    <p><b>Clusters.</b> The shaded bubbles are communities discovered by the Louvain method, which groups entries so that more of the shared-paragraph weight falls within groups than chance would predict. It runs upon the links presently drawn, and so changes with the "at least" slider and the revisions switch. Groups of fewer than five members receive no bubble. Each bubble is named for its two most-named members. The algorithm, not an editor, draws the groups, so a bubble may cut across a story-cycle wherever Lovecraft's own crossings pull it.</p>
+    <p>The four group colours were tested with a colour-vision validator against the page background, for every pair. All four pass the standard tests for colour-blind and full-colour readers alike. Each group bears its own shape as well, so that colour is never the only cue. The heatmap uses a single-hue scale upon a square-root curve, so that rare names stay visible beside common ones.</p>
 
     <h3 id="m-repro">8. Reproducing the numbers</h3>
-    <div class="callout"><p>The pipeline is in the project repository under <code>pipeline/</code>:</p>
+    <div class="callout"><p>The pipeline lies in the project repository, under <code>pipeline/</code>:</p>
     <ol><li><code>python pipeline/fetch_texts.py</code> downloads the stories.</li><li><code>python pipeline/extract.py</code> splits them into paragraphs.</li><li><code>python pipeline/count.py</code> applies the patterns and writes <code>data/counts.json</code>.</li><li><code>python pipeline/build.py</code> builds the site into <code>public/</code>.</li></ol>
-    <p>The patterns live in <code>pipeline/count.py</code>. Change one, re-run the last two steps, and every chart updates.</p></div>
+    <p>The patterns dwell in <code>pipeline/count.py</code>. Alter one, run the last two steps again, and every chart will follow.</p></div>
 
     <h3 id="m-table">9. Every pattern, every count</h3>
-    <p>All entries, most-named first. Click a name to open its card.</p>
+    <p>All entries, the most-named first. Click a name to open its card.</p>
   </div>
   <div class="scroll" id="m-table-wrap"><table class="mtable"><thead><tr><th>Entry</th><th>Group</th><th>Mentions</th><th>Stories named in</th><th>Patterns</th></tr></thead><tbody id="mTable"></tbody></table></div>
 </section>
@@ -470,8 +470,8 @@ footer b{color:var(--ink);font-weight:600}
 
 <footer>
   <div class="in">
-    <p><b>What counts as canon.</b> Lovecraft's own stories only. August Derleth's additions and later writers' creations are left out. A few names Lovecraft borrowed from friends (Tsathoggua, the Book of Eibon, the Hounds of Tindalos, von Junzt) are included and flagged, because he wrote them into his own fiction.</p>
-    <p><b>Revisions.</b> Five stories Lovecraft ghost-wrote or heavily rewrote for clients are tagged, and the Revisions switch hides them and their counts. Years are dates of composition.</p>
+    <p><b>What counts as canon.</b> Lovecraft's own stories, and nothing else. August Derleth's accretions and the inventions of later writers are excluded. A few names Lovecraft borrowed from his friends (Tsathoggua, the Book of Eibon, the Hounds of Tindalos, von Junzt) are admitted, and so marked, because he wrote them into his own fiction.</p>
+    <p><b>Revisions.</b> Five stories which Lovecraft ghost-wrote or heavily rewrote for his clients are marked as such, and the Revisions switch banishes them and their counts. Years are those of composition.</p>
   </div>
 </footer>
 
@@ -593,7 +593,7 @@ function openEntry(id){
    <p class="dr-desc">${esc(e.d)}</p>
    <h3>In the text</h3>
    <p class="mstat"><b>${fmt(tot)}</b>${tot===1?'mention':'mentions'} by name, in ${named} of ${plural(ss.length,'story','stories')}</p>
-   ${e.narr?`<p class="note">Narrates in the first person; references as “I” aren't counted.</p>`:''}
+   ${e.narr?`<p class="note">Speaks in the first person, and those references as “I” are not counted.</p>`:''}
    <ul class="slist">${ss.map(s=>{const c=mc(id,s);return `<li><button data-story="${s}"><span class="yr">${SM[s].y}</span><span>${esc(SM[s].t)}${SM[s].rev?`<span class="rev">Revision</span>`:''}</span><span class="mbar" style="${cc(e.c)}"${c?'':' title="Present, but never named"'}>${c?`<i style="width:${Math.max(2,Math.round(c/mx*52))}px"></i>${c}`:'—'}</span></button></li>`;}).join('')}</ul>
    <p class="alias">Counted as: ${al||'never named in the text'}</p>
    ${co.length?`<h3>Most often named alongside</h3><div class="chips">${co.map(([x,w])=>`<button class="chip" data-id="${x}" title="Named together in ${w} paragraph${w>1?'s':''}">${shp(EM[x].c)}${esc(EM[x].n)}<span class="w">${w}</span></button>`).join('')}</div>`:''}
@@ -917,22 +917,22 @@ new MutationObserver(()=>{draw();renderFindings();}).observe(document.documentEl
 /* ---------- Guided tour ---------- */
 const M=id=>mtot(EM[id]), NS=id=>namedIn(EM[id]);
 const TOUR=[
- {t:'A map of everything Lovecraft names',b:()=>`Each shape is a god, creature, person, place or book from his stories. <b>Bigger shapes are named more often.</b> A line joins two names that share a paragraph, and thicker lines share more. Hover over anything, drag to move around, and click to read an entry.`,
+ {t:'A chart of all that Lovecraft names',b:()=>`Each shape is a god, creature, person, place or book out of his tales. <b>The larger the shape, the oftener it is named.</b> A line joins two names that share a paragraph, and the thicker lines share more. Hover over anything, drag to wander about, and click to read an entry.`,
   go:()=>{}},
- {t:'The most-named figure is a dreamer, not a monster',b:()=>`Randolph Carter is named <b>${fmt(M('carter'))} times</b> across ${NS('carter')} stories. That's more than any god. His Dream-Quest links him to ghouls, night-gaunts, cats and the gods of Earth.`,
+ {t:'The name oftenest set down is a dreamer\'s, not a monster\'s',b:()=>`Randolph Carter is named <b>${fmt(M('carter'))} times</b> across ${NS('carter')} stories, which is oftener than any god. His Dream-Quest binds him to ghouls, night-gaunts, cats and the gods of earth.`,
   go:()=>{G.sel=G.byId.carter;camOn('carter');}},
- {t:'Cthulhu is named less than you might think',b:()=>{const n=M('cthulhu'),m=mc('cthulhu','mound');return `The Mythos is named for him, yet Cthulhu appears by name only <b>${n} times</b>. ${st.rev?`${m} of those come from <i>The Mound</i>, a story Lovecraft ghost-wrote.`:`Switch on Revisions and <i>The Mound</i> adds ${(MENT.cthulhu||{}).mound||0} more.`} He dominates one story and is name-dropped in the rest.`;},
+ {t:'Cthulhu is named less than one might suppose',b:()=>{const n=M('cthulhu'),m=mc('cthulhu','mound');return `The Mythos bears his name, yet Cthulhu is named only <b>${n} times</b>. ${st.rev?`${m} of those come from <i>The Mound</i>, a tale Lovecraft ghost-wrote.`:`Switch on Revisions, and <i>The Mound</i> adds ${(MENT.cthulhu||{}).mound||0} more.`} He dominates a single story, and in the rest is merely whispered of.`;},
   go:()=>{G.sel=G.byId.cthulhu;camOn('cthulhu');}},
- {t:'The Dreamlands are a world of their own',b:()=>{const ss=stories().slice().sort((a,b)=>DATA.words[b.id]-DATA.words[a.id]),rank=ss.findIndex(s=>s.id==='kadath')+1,k=E.filter(isVis).filter(e=>mc(e.id,'kadath')>0).length;
-   return `Lit up: <i>The Dream-Quest of Unknown Kadath</i>. It's the ${['','longest','second-longest','third-longest'][rank]||'#'+rank+' longest'} story here at ${fmt(DATA.words.kadath)} words, and it names <b>${k} entries</b>, most of which never appear in the waking-world stories.`;},
+ {t:'The Dreamlands are a world unto themselves',b:()=>{const ss=stories().slice().sort((a,b)=>DATA.words[b.id]-DATA.words[a.id]),rank=ss.findIndex(s=>s.id==='kadath')+1,k=E.filter(isVis).filter(e=>mc(e.id,'kadath')>0).length;
+   return `Lit up: <i>The Dream-Quest of Unknown Kadath</i>. It is the ${['','longest','second-longest','third-longest'][rank]||'#'+rank+' longest'} tale here, at ${fmt(DATA.words.kadath)} words, and it names <b>${k} entries</b>, most of which never appear in the tales of the waking world.`;},
   go:()=>{G.sel=null;lightStory('kadath');}},
- {t:'The strongest bond is a doctor and his patient',b:()=>`Charles Dexter Ward and Dr. Willett share <b>${cow().get(ekey('ward','willett'))||0} paragraphs</b>, the most of any pair. Ward and Joseph Curwen share ${cow().get(ekey('curwen','ward'))||0}. The longest story in the set is really a drama about three people.`,
+ {t:'The closest bond is between a physician and his patient',b:()=>`Charles Dexter Ward and Dr. Willett share <b>${cow().get(ekey('ward','willett'))||0} paragraphs</b>, more than any other pair. Ward and Joseph Curwen share ${cow().get(ekey('curwen','ward'))||0}. The longest story in the set is, at bottom, a drama of three men.`,
   go:()=>{G.sel=G.byId.ward;camOn('ward');}},
- {t:'Arkham ties the waking world together',b:()=>`Arkham is named <b>${M('arkham')} times</b> in ${NS('arkham')} stories, more than any other place. Its links reach Miskatonic's professors, the Witch House, Dunwich and Innsmouth.`,
+ {t:'Arkham binds the waking world together',b:()=>`Arkham is named <b>${M('arkham')} times</b> in ${NS('arkham')} stories, more than any other place. Its threads reach out to Miskatonic's professors, the Witch House, Dunwich and Innsmouth.`,
   go:()=>{G.sel=G.byId.arkham;camOn('arkham');}},
- {t:'The gods are invoked more than they appear',b:()=>`Showing gods only. Azathoth is named ${M('azathoth')} times, Yog-Sothoth ${M('yogsothoth')}, Nyarlathotep ${M('nyarlathotep')} and Shub-Niggurath ${M('shub')}. Mostly they turn up in chants and lists of names rather than on stage.`,
+ {t:'The gods are invoked oftener than they appear',b:()=>`The gods alone are shown. Azathoth is named ${M('azathoth')} times, Yog-Sothoth ${M('yogsothoth')}, Nyarlathotep ${M('nyarlathotep')} and Shub-Niggurath ${M('shub')}. For the most part they are met with in chants and litanies of names, and seldom in the flesh.`,
   go:()=>{G.sel=null;G_ORDER.forEach(g=>{if(g!=='god')G.hidden.add(g);});renderLegend();kick(.3);setTimeout(()=>camTo(fitTarget(G.nodes.filter(shown))),reduce?0:250);}},
- {t:'Now it\'s your turn',b:()=>`Find a name, light up a story to see its cast, or raise the “at least” slider to keep only the strongest bonds. The findings below dig into the numbers.`,
+ {t:'Henceforth the reader goes on alone',b:()=>`Find a name, light up a story to see its cast, or raise the “at least” slider to keep only the closest bonds. The findings below delve deeper into the numbers.`,
   go:()=>{G.sel=null;camTo(fitTarget(G.nodes.filter(shown)));}},
 ];
 let tourI=0;
@@ -965,7 +965,7 @@ function renderBars(){
   $('#barChips').innerHTML=[['all','Everything']].concat(G_ORDER.map(g=>[g,GROUPS[g]])).map(([k,l])=>`<button class="chip filt" data-bg="${k}" aria-pressed="${st.barGroup===k}">${k==='all'?'':gshp(k)}${l}</button>`).join('');
   const rows=E.filter(isVis).filter(e=>st.barGroup==='all'||GROUP[e.c]===st.barGroup).map(e=>({e,v:mtot(e)})).filter(r=>r.v>0).sort((a,b)=>b.v-a.v).slice(0,15);
   const all=E.filter(isVis).reduce((a,e)=>a+mtot(e),0), top=rows.reduce((a,r)=>a+r.v,0);
-  $('#barsSub').innerHTML=st.barGroup==='all'?`The top fifteen account for <b>${Math.round(top/all*100)}%</b> of the ${fmt(all)} names counted. People are named far more often than the gods.`:`The fifteen most-named ${GROUPS[st.barGroup].toLowerCase()}. Click a bar to open the entry.`;
+  $('#barsSub').innerHTML=st.barGroup==='all'?`The first fifteen account for <b>${Math.round(top/all*100)}%</b> of the ${fmt(all)} names counted. It is a curious thing that mortal men and women are named far more often than the gods.`:`The fifteen most-named ${GROUPS[st.barGroup].toLowerCase()}. Click a bar to open its entry.`;
   const W=$('#bars').clientWidth||800, lab=W<560?126:190, rh=30, bh=16, valW=46, bw=Math.max(60,W-lab-valW), max=rows.length?rows[0].v:1, H=rows.length*rh+4;
   $('#bars').innerHTML=`<svg width="${W}" height="${H}" role="img" aria-label="Bar chart of most-named entries">${rows.map((r,i)=>{const y=i*rh, len=r.v/max*bw, g=GROUP[r.e.c];
     return `<g><text x="${lab-10}" y="${y+rh/2+5}" text-anchor="end">${esc(r.e.n.length>(W<560?16:26)?r.e.n.slice(0,(W<560?15:25))+'…':r.e.n)}</text>
@@ -988,7 +988,7 @@ function renderHeat(){
   const W=$('#heat').parentElement.clientWidth||900, lab=W<560?130:190, top=128;
   const cell=Math.max(22,Math.min(38,Math.floor((W-lab-24)/cols.length))), H=top+ents.length*cell+4, SW=lab+cols.length*cell+110;
   const tot=cols.length;
-  $('#heatSub').innerHTML=`The eighteen most-named gods, creatures, places and books (people left out), across the ${tot} stories that name them. Darker cells mean more mentions. Read across a row to see how far an entity travels: most stay put in one story.`;
+  $('#heatSub').innerHTML=`The eighteen most-named gods, creatures, places and books (mankind excepted), across the ${tot} stories that name them. The darker the cell, the more the mentions. Read along a row to see how far a thing wanders abroad: most never stir from a single story.`;
   $('#rampMax').textContent=`More (max ${max} in one story)`;
   let svg=`<svg width="${SW}" height="${H}" role="img" aria-label="Heatmap of mentions by story">`;
   cols.forEach((s,j)=>{const x=lab+j*cell+cell/2;svg+=`<text transform="translate(${x+4},${top-8}) rotate(-50)" font-size="12" class="${s.rev?'mut':''}">${esc(SHORT[s.id]||s.t)}${s.rev?' *':''}</text>`;});
@@ -1016,7 +1016,7 @@ function renderGrow(){
   const pts=growData(), total=pts[pts.length-1].cum;
   const big=pts.slice().sort((a,b)=>b.nw.length-a.nw.length)[0];
   const by={};big.nw.forEach(e=>{const f=visS(e)[0];by[f]=(by[f]||0)+1;});const lead=Object.entries(by).sort((a,b)=>b[1]-a[1])[0];
-  $('#growSub').innerHTML=`Cumulative entries by the year of their first story. The biggest jump is <b>${big.y}</b>, with ${big.nw.length} new entries${lead?`, ${lead[1]} of them from <i>${esc(SM[lead[0]].t)}</i>`:''}.`;
+  $('#growSub').innerHTML=`Entries accumulated by the year of their first story. The greatest swelling came in <b>${big.y}</b>, with ${big.nw.length} new entries${lead?`, ${lead[1]} of them from <i>${esc(SM[lead[0]].t)}</i>`:''}.`;
   const W=$('#grow').clientWidth||560, H=280, ml=36, mr=14, mt=16, mb=30, iw=W-ml-mr, ih=H-mt-mb;
   const x=y=>ml+(y-1917)/(1935-1917)*iw, yv=v=>mt+ih-(v/total)*ih;
   const tick=total>80?25:20, ticks=[];for(let t=0;t<=total;t+=tick)ticks.push(t);
@@ -1049,10 +1049,10 @@ function renderTiles(){
   const vis=E.filter(isVis), all=vis.reduce((a,e)=>a+mtot(e),0), share=g=>Math.round(vis.filter(e=>GROUP[e.c]===g).reduce((a,e)=>a+mtot(e),0)/all*100);
   const never=vis.filter(e=>mtot(e)===0).map(e=>e.n);
   $('#tiles').innerHTML=[
-    [LITERAL_DEEP_ONES,`times <i>The Shadow over Innsmouth</i> actually uses the words “Deep Ones.” Mostly they're “them things,” “sea-things” and “fish-frogs” (${M('deepones')} counting those).`],
-    [mc('thurston','coc'),`times Francis Thurston, narrator of <i>The Call of Cthulhu</i>, is named in his own story. Dyer manages ${mc('dyer','mountains')} in <i>Mountains of Madness</i>.`],
-    [share('ppl')+'%',`of all names counted belong to people and cults. Gods and Great Old Ones get ${share('god')}%, and creatures ${share('cre')}%.`],
-    [never.length,`entries are never named at all: ${never.map(esc).join(' and ')}. They exist only as “I.”`],
+    [LITERAL_DEEP_ONES,`times <i>The Shadow over Innsmouth</i> actually uses the words “Deep Ones.” For the most part they are “them things,” “sea-things” and “fish-frogs” (${M('deepones')}, counting those).`],
+    [mc('thurston','coc'),`times Francis Thurston, narrator of <i>The Call of Cthulhu</i>, is named in his own story. Dyer fares little better, with ${mc('dyer','mountains')} in <i>Mountains of Madness</i>.`],
+    [share('ppl')+'%',`of all names counted belong to people and cults. The gods and Great Old Ones claim ${share('god')}%, and the creatures ${share('cre')}%.`],
+    [never.length,`entries are never named at all: ${never.map(esc).join(' and ')}. They have no existence save as “I.”`],
   ].map(([b,p])=>`<div class="tile"><b>${b}</b><p>${p}</p></div>`).join('');
 }
 let rsT=0; addEventListener('resize',()=>{clearTimeout(rsT);rsT=setTimeout(renderFindings,150);});
@@ -1099,7 +1099,7 @@ function renderExam(){
   const el=$('#exam');
   if(!X.started){
     el.innerHTML=`<p class="lbl">Miskatonic University · Department of Comparative Folklore</p><h2>The Examination</h2>
-      <p>Ten questions drawn from the catalogue and the counts: identify entries from their epithets, place them in their stories, name the cast, and judge which names Lovecraft used most. A correct answer steadies the mind (+2 sanity). A wrong one costs 5.</p>
+      <p>Ten questions drawn from the catalogue and the counts. The candidate must identify entries by their epithets, place them in their proper stories, name the cast, and judge which names Lovecraft used most. A correct answer steadies the mind (+2 sanity); an incorrect one costs 5.</p>
       <div class="exam-actions"><button class="btn solid" data-exam="start">Begin the examination</button></div>`;
     return;
   }
