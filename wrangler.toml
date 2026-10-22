@@ -1,5 +1,7 @@
-# Cloudflare Pages project config (used by `npx wrangler pages deploy`).
-# In the Cloudflare dashboard, use: build command `python3 pipeline/build.py` (or empty), output directory `public`.
+# Cloudflare config for `npx wrangler deploy` (Workers with static assets).
+# The site is prebuilt into public/, so the Worker just serves that folder.
 name = "arkham-index"
-pages_build_output_dir = "public"
 compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./public"

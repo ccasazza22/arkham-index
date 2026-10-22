@@ -20,7 +20,7 @@ pipeline/
   build.py              assemble the site                          -> public/index.html
 public/                 the deployable site (index.html, favicon.svg, _headers)
 METHODOLOGY.md          how the numbers are made, checked and limited
-wrangler.toml           Cloudflare Pages config
+wrangler.toml           Cloudflare deploy config
 ```
 
 `corpus/` is git-ignored. The story texts are downloaded fresh by the pipeline rather than redistributed.
@@ -44,25 +44,16 @@ To change how an entry is counted, edit its patterns in `pipeline/count.py`, the
 
 Preview locally with any static server, for example `python -m http.server -d public 8000`.
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare
 
-**Git integration (recommended).** Push this repo to GitHub or GitLab. Then, in the Cloudflare dashboard, go to Workers & Pages → Create → Pages → Connect to Git and use these settings:
+**Git integration (recommended).** Push this repo to GitHub or GitLab, then in the Cloudflare dashboard go to Workers & Pages → Create and connect the repo. Either project type works:
 
-| Setting | Value |
-|---|---|
-| Framework preset | None |
-| Build command | `python3 pipeline/build.py` (or leave empty) |
-| Build output directory | `public` |
+- **Worker** (Cloudflare's default): leave the build command empty and keep the deploy command `npx wrangler deploy`. `wrangler.toml` points it at `public/`.
+- **Pages** (the Pages tab): framework preset None, build command empty (or `python3 pipeline/build.py`), build output directory `public`.
 
-Every push to the production branch deploys, and other branches get preview URLs. Because `public/index.html` is committed, an empty build command also works. Cloudflare then serves `public/` as it is, so run `build.py` locally before you push.
+Every push to the production branch deploys. Because `public/index.html` is committed, Cloudflare serves `public/` as it is, so run `build.py` locally before you push.
 
-**Direct upload.** From the repo root, run:
-
-```sh
-npx wrangler pages deploy
-```
-
-Wrangler reads `wrangler.toml` and uploads `public/`.
+**Direct upload.** From the repo root, run `npx wrangler deploy`. Wrangler reads `wrangler.toml` and uploads `public/`.
 
 `public/_headers` sets a Content Security Policy that allows only the page's inline code and Google Fonts, plus basic security and cache headers.
 
