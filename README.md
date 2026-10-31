@@ -55,6 +55,8 @@ Every push to the production branch deploys. Because `public/index.html` is comm
 
 **Direct upload.** From the repo root, run `npx wrangler deploy`. Wrangler reads `wrangler.toml` and uploads `public/`.
 
+**Share image.** `public/og.jpg` is the link-preview image, set in the page head by `build.py` (along with the site URL, `SITE`). To remake it after the data changes, run `node pipeline/og_image.js public/index.html public/og.jpg` (needs `npm i puppeteer-core` and Chrome) and keep the best of a few takes.
+
 `public/_headers` sets a Content Security Policy that allows only the page's inline code and Google Fonts, plus basic security and cache headers.
 
 ## Credits

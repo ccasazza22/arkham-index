@@ -27,14 +27,24 @@ def fragment():
     return tpl.replace('/*CATALOGUE*/', cat).replace('/*COUNTS*/', data)
 
 
+# Public address of the deployed site; link previews need absolute URLs.
+SITE = 'https://arkham-index.arkham-index.workers.dev'
+
 HEAD = '''<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="A data deep dive into H. P. Lovecraft's fiction: every god, creature, person, place and book he names, counted and connected.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{SITE}/">
 <meta property="og:title" content="The Arkham Index">
-<meta property="og:description" content="Every name in the Mythos, counted and connected.">
+<meta property="og:description" content="Every name in the Mythos, numbered and correlated: a web of the gods, creatures, people, places and books in Lovecraft's fiction.">
+<meta property="og:image" content="{SITE}/og.jpg">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="The Arkham Index: a network of names from H. P. Lovecraft's fiction, clustered around Randolph Carter, Cthulhu, Arkham and Charles Dexter Ward.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 '''
@@ -49,7 +59,7 @@ def main():
         return
     # the fragment opens with <title>, <meta>, <link> and <style>; they belong in <head>
     split = frag.index('</style>') + len('</style>')
-    page = HEAD + frag[:split] + '\n</head>\n<body>\n' + frag[split:] + '\n</body>\n</html>\n'
+    page = HEAD.replace('{SITE}', SITE) + frag[:split] + '\n</head>\n<body>\n' + frag[split:] + '\n</body>\n</html>\n'
     os.makedirs(os.path.join(ROOT, 'public'), exist_ok=True)
     dest = os.path.join(ROOT, 'public', 'index.html')
     open(dest, 'w', encoding='utf-8').write(page)
